@@ -2,7 +2,8 @@
 Flask based web-application which could serve as a back-end for a multiple-choice-question game. The application, primarily, populates its data-store from sample data provided (data.csv). The application allows end-users to perform the following : fetching a question, fetching all questions, editing an existing question, fetching all the topics (for which the game has questions) and adding new questions. The application allows the end-users to further filter questions on the basis of 'topic' (from where the question is being derived from) and question creation-time.
 
 ##How to:
-1. To run app-server : (by default, the server would run on port 5000 of **localhost**)
+
+**To run app-server :** (by default, the server would run on port 5000 of **localhost**)
 ```sh
 python app_server.py data.csv
 ```

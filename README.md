@@ -19,15 +19,15 @@ a. To get a question:
 
 	a. Fetches a question from topic named *topic_name*:
 
-		```sh
-	  	curl http://localhost:5000/get_question/<topic_name>
-		```
+	```sh
+  	curl http://localhost:5000/get_question/<topic_name>
+	```
 
 	b. Fetches most-recently added question from topic named *topic_name*
 
-		```sh
-		curl http://localhost:5000/get_question/<topic_name>?sort=y
-		```
+	```sh
+	curl http://localhost:5000/get_question/<topic_name>?sort=y
+	```
 
 b. To get all questions:
 
@@ -79,7 +79,9 @@ curl -H "Content-Type: application/json" -X POST -d '{"Question" : "Hello World?
 ```
 
 ##Requirements
+
 . Flask 0.10
+
 . Python 2.7
 
 

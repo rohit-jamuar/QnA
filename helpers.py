@@ -73,8 +73,8 @@ def select_k_largest(arr, k, key):
                     if key(arr[i]) < key(arr[j]):
                         arr[i], arr[j] = arr[j], arr[i]
             return arr[:k]
-        else:
-            return sorted(arr, key=key, reverse=True)
+        arr.sort(key=key, reverse=True)
+        return arr
 
 
 def get_questions_rev_chrono_order(all_data, number=None, topic=None):
@@ -92,8 +92,7 @@ def get_questions_rev_chrono_order(all_data, number=None, topic=None):
     elif topic in all_data:
         data = all_data[topic]
     if data:
-        to_return = select_k_largest(data, number, lambda x: x.update_time)
-        return to_return
+        return select_k_largest(data, number, lambda x: x.update_time)
 
 
 def verify_value(request_object, key=None, affirmatives=None):

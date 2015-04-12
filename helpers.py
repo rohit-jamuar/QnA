@@ -62,8 +62,13 @@ def populate_data_source(filename):
 
 def select_k_largest(arr, k, key):
     '''
-    k-select algorithm
-    time-complexity : O(kn)
+    This routine primarily tries to select 'k' largest values from 'arr', if
+    k < len(arr) else, it defaults to using in-place sorting mechanism for
+    ordering elements of 'arr' in a non-increasing manner.
+    k-select algorithm :
+        time-complexity : O(kn)
+    in-place sorting:
+        time-complexity : O(nlogn)
     space-complexity : O(1)
     '''
     if all([arr, key]):

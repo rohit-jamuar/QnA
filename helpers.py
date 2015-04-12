@@ -64,7 +64,7 @@ def select_k_largest(arr, k, key):
     '''
     k-select algorithm
     time-complexity : O(kn)
-    space-complexity : O(k)
+    space-complexity : O(1)
     '''
     if all([arr, key]):
         if all([k, k < len(arr)]):

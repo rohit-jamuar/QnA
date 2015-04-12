@@ -10,11 +10,12 @@ python app_server.py data.csv
 
 a. To get a question:
   
-  1. On the basis of **question-id** - 
+  1. On the basis of **question_id** - 
 
   	```sh
 	curl http://localhost:5000/get_question/<question_id>
 	```
+	A **question_id** would be a positive integral value >= 1.
   
   2. On the basis of a **topic** - 
 

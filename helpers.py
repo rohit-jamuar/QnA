@@ -7,6 +7,7 @@ from os.path import isfile
 from datetime import datetime
 from random import shuffle
 
+
 class Question(object):
 
     '''
@@ -59,6 +60,23 @@ def populate_data_source(filename):
     return data_source
 
 
+def select_k_largest(arr, k, key):
+    '''
+    k-select algorithm
+    time-complexity : O(kn)
+    space-complexity : O(k)
+    '''
+    if all([arr, key]):
+        if all([k, k < len(arr)]):
+            for i in range(k):
+                for j in range(i + 1, len(arr)):
+                    if key(arr[i]) < key(arr[j]):
+                        arr[i], arr[j] = arr[j], arr[i]
+            return arr[:k]
+        else:
+            return sorted(arr, key=key, reverse=True)
+
+
 def get_questions_rev_chrono_order(all_data, number=None, topic=None):
     '''
     Returns a list of Question objects in a reverse chronological order as
@@ -74,10 +92,7 @@ def get_questions_rev_chrono_order(all_data, number=None, topic=None):
     elif topic in all_data:
         data = all_data[topic]
     if data:
-        to_return =\
-            sorted(data, key=lambda x: x.update_time, reverse=True)
-        if number:
-            return to_return[:number]
+        to_return = select_k_largest(data, number, lambda x: x.update_time)
         return to_return
 
 
@@ -89,6 +104,7 @@ def verify_value(request_object, key=None, affirmatives=None):
     if all([request_object, key, affirmatives]):
         temp = request_object.args.get(key, None)
         return True if temp and temp in affirmatives else False
+
 
 def get_choices(answer, distractors):
     '''

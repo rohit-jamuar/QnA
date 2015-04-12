@@ -79,14 +79,15 @@ def fetch_question(qid=-1, topic=None):
 @APP.route('/get_all_questions/<topic>', methods=['GET'])
 def get_all_questions(topic=None):
     '''
-    This endpoint is responsible for returning all the questions present in the
-    internal data-store. The end-user has the ability to filter questions on
-    the basis of topic. Also, the end-user can enable chronological sorting by
-    passing an HTTP GET param.
+    This endpoint is responsible for returning all the [question-id, question]
+    pairs present in the internal data-store. The end-user has the ability to
+    filter questions on the basis of topic. Also, the end-user can enable
+    chronological sorting by passing an HTTP GET param.
     '''
     max_count = request.args.get('max_count', None)
     try:
         max_count = int(max_count) if max_count else None
+        max_count = None if max_count <= 0 else max_count
     except ValueError:
         max_count = None
     sort_requested = verify_value(request, 'sort', {u'y', u'Y'})
@@ -95,8 +96,8 @@ def get_all_questions(topic=None):
     if all([topic, topic in DATA_STORE]):
         if sort_requested:
             questions_to_return = [
-                    question.ques.capitalize() for question in
-                    get_questions_rev_chrono_order(DATA_STORE,
+                    [question.qid, question.ques.capitalize()]
+                    for question in get_questions_rev_chrono_order(DATA_STORE,
                             number=max_count, topic=topic)
                 ]
         else:
@@ -105,15 +106,18 @@ def get_all_questions(topic=None):
                 for question in DATA_STORE[topic]:
                     if len(questions_to_return) == max_count:
                         break
-                    questions_to_return.append(question.ques.capitalize())
+                    questions_to_return.append(\
+                        [question.qid, question.ques.capitalize()])
             else:
-                questions_to_return = [question.ques.capitalize()
-                                       for question in DATA_STORE[topic]]
+                questions_to_return = [
+                        [question.qid, question.ques.capitalize()]
+                                for question in DATA_STORE[topic]
+                    ]
     elif not topic:
         if sort_requested:
             questions_to_return = [
-                    q.ques.capitalize() for q in
-                    get_questions_rev_chrono_order(DATA_STORE,
+                    [question.qid, question.ques.capitalize()]
+                    for question in get_questions_rev_chrono_order(DATA_STORE,
                                                    number=max_count)
                 ]
         else:
@@ -124,14 +128,17 @@ def get_all_questions(topic=None):
                     if stop_appending:
                         break
                     for question in DATA_STORE[topic]:
-                        questions_to_return.append(question.ques.capitalize())
+                        questions_to_return.append(\
+                            [question.qid, question.ques.capitalize()])
                         if len(questions_to_return) == max_count:
                             stop_appending = True
                             break
             else:
-                questions_to_return = [question.ques.capitalize()
-                                       for topic in DATA_STORE
-                                       for question in DATA_STORE[topic]]
+                questions_to_return = [
+                        [question.qid, question.ques.capitalize()]
+                            for topic in DATA_STORE
+                            for question in DATA_STORE[topic]
+                    ]
     else:
         return jsonify({'Error': 'Invalid topic was requested!'})
     return jsonify({'Questions': questions_to_return})

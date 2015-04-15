@@ -60,7 +60,7 @@ b. To get all questions:
 
   Both **sort** and **max_count** can be simultaneously applied to queries as well. **e.g.**
   ```sh
-  curl 'http://localhost:5000/get_all_questions/arithmetic?max_count=m&sort=y'
+  curl 'http://localhost:5000/get_all_questions/arithmetic?max_count=15&sort=y'
   ```
 
 c. To get all topics:
